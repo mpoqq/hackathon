@@ -5,3 +5,6 @@ fetcher/.db
 .metals
 venv
 create
+__pycache__
+
+ngrok
