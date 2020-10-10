@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-
-declare var L;
+import { latLng, tileLayer } from 'leaflet';
 
 @Component({
   selector: 'app-root',

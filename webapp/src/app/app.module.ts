@@ -7,10 +7,11 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MapModule } from './map/map.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -19,6 +20,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatSliderModule,
     MatGridListModule,
     MatCheckboxModule,
+    MapModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
