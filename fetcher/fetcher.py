@@ -13,6 +13,8 @@ BARS_UPPER = 3
 PARKING_UPPER = 3
 RESTAURANT_UPPER = 5
 
+COORDINATE_TO_KM = 1. / 111.
+
 
 class NodeType(str, Enum):
     BAR = "bar"
@@ -159,7 +161,7 @@ def get_distance(lon1, lat1, lon2, lat2) -> float:
 # Use the overpass API to query for the nodes filtered by the
 def get_nodes(overpassapi, querystring, nodeType, lat, lon) -> List[Node]:
     response = overpassapi.get(
-        f'node [{querystring}] ({lat},{lon},{lat+0.001},{lon+0.001});')
+        f'node [{querystring}] (around:4000.0,{lat},{lon});')
     print(f"Received {len(response['features'])} results.")
 
     return [
@@ -233,7 +235,7 @@ with open(os.getcwd() + '/fetcher/coordinates.txt', 'r') as coordinates:
         print(
             f"GroceryScore: {groceriesScore}; restaurantScore: {restaurantScore}; barScore: {barScore}; transportScore: {transportScore}; parkingScore: {parkingScore}"
         )
-        # if not nodes:
-        #     continue
-        # else:
-        #     insert_nodes(nodes)
+        if not nodes:
+            continue
+        else:
+            insert_nodes(nodes)
