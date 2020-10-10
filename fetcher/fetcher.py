@@ -56,7 +56,7 @@ def get_score(nodes: List[Node], upper_bound) -> float:
             nodes[:upper_bound], key=lambda x: x.distance, reverse=True)
     ]
     n = len(distances)
-    score_nom = sum([polynomial(d) * (i + 1) for d, i in enumerate(distances)])
+    score_nom = sum([polynomial(d) * (i + 1) for i, d in enumerate(distances)])
     score_denom = (n * (n + 1.)) / 2.
     return score_nom / score_denom
 
@@ -227,15 +227,15 @@ with open(os.getcwd() + '/fetcher/coordinates.txt', 'r') as coordinates:
         transportScore = get_score(transport, TRANSPORT_UPPER)
         tile = Tile(lat, lon, barScore, groceriesScore, parkingScore,
                     restaurantScore, transportScore)
-        tileID = insert_tile(tile)
+        # tileID = insert_tile(tile)
+        tileID = 0
         nodes = [*groceries, *restaurants, *bars, *parking_lots, *transport]
         for n in nodes:
             n.tileId = tileID
-        print(nodes)
         print(
             f"GroceryScore: {groceriesScore}; restaurantScore: {restaurantScore}; barScore: {barScore}; transportScore: {transportScore}; parkingScore: {parkingScore}"
         )
-        if not nodes:
-            continue
-        else:
-            insert_nodes(nodes)
+        # if not nodes:
+        #     continue
+        # else:
+        #     insert_nodes(nodes)
