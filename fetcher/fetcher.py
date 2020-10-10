@@ -2,6 +2,7 @@ import os
 import overpass
 import psycopg2
 import sys
+import time
 
 from dataclasses import dataclass, astuple, asdict
 from typing import List
@@ -15,7 +16,7 @@ BARS_UPPER = 3
 PARKING_UPPER = 3
 RESTAURANT_UPPER = 5
 
-COORDINATE_TO_KM = 1. / 111.
+overpassapi = overpass.API()
 
 
 class NodeType(str, Enum):
@@ -28,13 +29,13 @@ class NodeType(str, Enum):
 
 @dataclass
 class Tile:
-    lat: float
-    lon: float
-    barScore: float
-    groceryScore: float
-    parkingScore: float
-    restaurantScore: float
-    transportScore: float
+    lat: float  # 1
+    lon: float  # 2
+    barScore: float  #3
+    groceryScore: float  #4
+    parkingScore: float  #5
+    restaurantScore: float  #6
+    transportScore: float  #7
 
 
 @dataclass
@@ -162,17 +163,27 @@ def get_distance(lon1, lat1, lon2, lat2) -> float:
 
 # Use the overpass API to query for the nodes filtered by the
 def get_nodes(overpassapi, querystring, nodeType, lat, lon) -> List[Node]:
-    response = overpassapi.get(
-        f'node [{querystring}] (around:4000.0,{lat},{lon});')
-    print(f"Received {len(response['features'])} results.")
+    while True:
+        try:
+            response = overpassapi.get(
+                f'node [{querystring}] (around:4000.0,{lat},{lon});')
+        except overpass.MultipleRequestsError:
+            print("We have to wait now.")
+            time.sleep(0.5)
+            continue
+        except (Exception) as error:
+            print(error)
+            return
 
-    return [
-        Node(
-            0, nodeType.name,
-            get_distance(lat, lon, feature['geometry']['coordinates'][1],
-                         feature['geometry']['coordinates'][0]), feature['id'])
-        for feature in response['features']
-    ]
+        print(f"Received {len(response['features'])} results.")
+
+        return [
+            Node(
+                0, nodeType.name,
+                get_distance(lat, lon, feature['geometry']['coordinates'][1],
+                             feature['geometry']['coordinates'][0]),
+                feature['id']) for feature in response['features']
+        ]
 
 
 def get_shops(overpassapi, lat, lon) -> List[Node]:
@@ -205,15 +216,6 @@ def get_public_transportation(overpassapi, lat, lon) -> List[Node]:
                      NodeType.TRANSPORT, lat, lon)
 
 
-create_tables()
-print("Created tables")
-tile_list = []
-
-overpassapi = overpass.API()
-
-print("fetching nodes in tiles")
-
-
 def fetch_data(lat: float, lon: float) -> None:
     groceries = get_shops(overpassapi, lat, lon)
     groceriesScore = get_score(groceries, GROCERIE_UPPER)
@@ -241,6 +243,8 @@ def fetch_data(lat: float, lon: float) -> None:
 
 
 if __name__ == "__main__":
+    create_tables()
+    print("Created tables")
     lat_lon_list = []
 
     with open(
@@ -252,5 +256,5 @@ if __name__ == "__main__":
             lat, lon = float(lat), float(lon)
             lat_lon_list.append((lat, lon))
 
-    with Pool(processes=4) as p:
+    with Pool(processes=3) as p:
         p.starmap(fetch_data, lat_lon_list)
