@@ -1,12 +1,23 @@
-<div class="container-fluid w-100 h-100 main">
-    <div class="row w-100">
-        <div class="col display-flex justify-content-center">
+<div class="d-flex flex-column h-100 w-100 main">
+    <div class="row w-100 flex-nowrap">
+        <div class="col-3 pt-1 display-flex justify-content-center">
             <img src="../../assets/logo.svg" class="logo" routerLink="/" />
         </div>
-
+        <div class="col">
+            <div class="container d-flex justify-content-between">
+                <div class="col-md-auto d-flex pb-3 pt-3">
+                    <input class="city-input xl-font" [(ngModel)]="city" (keyup.enter)="updateCity()"
+                        (blur)="updateCity()" placeholder="Enter your City">
+                </div>
+                <div class="col-md-auto d-flex pb-3 pt-3">
+                    <input class="city-input xl-font" [(ngModel)]="work" (keyup.enter)="updateWork()"
+                        (blur)="updateWork()" placeholder="Enter your working address">
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row w-100">
-        <div class="col-3 display-flex justify-content-center menu-bg">
+    <div class="row w-100 bg flex-grow-1">
+        <div class="col-3 pt-5 display-flex justify-content-center menu-bg">
             <div class="container d-flex justify-content-center align-items-center">
                 <div class="col scoring">
                     <div class="row">
@@ -79,7 +90,7 @@
                 </div>
             </div>
         </div>
-        <div class="col justify-content-center">
+        <div class="col pt-5 justify-content-center">
             <app-map></app-map>
         </div>
     </div>
