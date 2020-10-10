@@ -56,7 +56,7 @@ def get_score(nodes: List[Node], upper_bound) -> float:
             nodes[:upper_bound], key=lambda x: x.distance, reverse=True)
     ]
     n = len(distances)
-    score_nom = sum([polynomial(d) * i for d, i in enumerate(distances)])
+    score_nom = sum([polynomial(d) * (i + 1) for d, i in enumerate(distances)])
     score_denom = (n * (n + 1.)) / 2.
     return score_nom / score_denom
 
