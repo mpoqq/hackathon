@@ -66,7 +66,7 @@ def get_all_nodes_from_tilesId(tilesId) -> List[Node]:
     try:
         conn = connect_db()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM nodes WHERE tileId = (%s)", tilesId)
+        cur.execute("SELECT * FROM nodes WHERE tileId = (%s)", (tilesId,))
         print(f"Fetched {cur.rowcount} nodes.")
         rows = cur.fetchall()
         nodes = [Node(*row) for row in rows]
@@ -87,6 +87,6 @@ def return_tiles():
 
 @app.route('/api/types', methods=['GET'])
 def return_nodes():
-    tilesId = request.args.get('tilesId', '')
+    tilesId = int(request.args.get('tilesId', ''))
     nodes = get_all_nodes_from_tilesId(tilesId)
     return jsonify(nodes)
