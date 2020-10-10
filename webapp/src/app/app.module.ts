@@ -10,23 +10,35 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MapModule } from './map/map.module';
+import { AppRoutingModule } from './app-routing.module';
+import { OverviewComponent } from './overview/overview.component';
+import { MatInputModule } from '@angular/material/input';
+import { LandingComponent } from './landing/landing.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppService } from './services/app.service';
 
 @NgModule({
   declarations: [
     AppComponent,
+    OverviewComponent,
+    LandingComponent,
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatInputModule,
     MatSliderModule,
     MatGridListModule,
     MatCheckboxModule,
     MapModule,
     MatTooltipModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

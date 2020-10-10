@@ -1,7 +1,14 @@
-.container {
-    display: flex;
+@import "../variables.scss";
+
+.main {
+    background-color:$background;
 }
-.menu-bg {
-    background: lightgrey;
+.footer {
+    position:absolute;
+    bottom: 0;
 }
-#mapid { height: 100%; }
+
+.link {
+    color: rgb(78, 78, 78);
+    padding-right: 50px;
+}

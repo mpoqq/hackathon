@@ -1,0 +1,21 @@
+@import "../../variables.scss";
+
+.main {
+    background-color:$background;
+}
+
+.logo {
+    width: 800px;
+    height: 250px;
+    padding-right: 100px;
+}
+
+.city-form {
+    width: 400px;
+    font-size: x-large;
+}
+
+.button-container {
+    padding-top: 10px;
+    padding-right: 100px                        ;
+}
