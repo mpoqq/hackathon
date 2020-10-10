@@ -1,11 +1,13 @@
 import os
 import overpass
 import psycopg2
+import sys
 
 from dataclasses import dataclass, astuple, asdict
 from typing import List
 from enum import Enum
 from math import sin, cos, asin, sqrt, radians
+from multiprocessing import Pool
 
 GROCERIE_UPPER = 5
 TRANSPORT_UPPER = 1
@@ -210,32 +212,45 @@ tile_list = []
 overpassapi = overpass.API()
 
 print("fetching nodes in tiles")
-with open(os.getcwd() + '/fetcher/coordinates.txt', 'r') as coordinates:
-    for lat_lon in coordinates:
-        lat_lon = lat_lon.strip()
-        lat, lon = lat_lon.split(" ")
-        lat, lon = float(lat), float(lon)
-        groceries = get_shops(overpassapi, lat, lon)
-        groceriesScore = get_score(groceries, GROCERIE_UPPER)
-        restaurants = get_restaurants(overpassapi, lat, lon)
-        restaurantScore = get_score(restaurants, RESTAURANT_UPPER)
-        bars = get_bars(overpassapi, lat, lon)
-        barScore = get_score(bars, BARS_UPPER)
-        parking_lots = get_parking_lots(overpassapi, lat, lon)
-        parkingScore = get_score(parking_lots, PARKING_UPPER)
-        transport = get_public_transportation(overpassapi, lat, lon)
-        transportScore = get_score(transport, TRANSPORT_UPPER)
-        tile = Tile(lat, lon, barScore, groceriesScore, parkingScore,
-                    restaurantScore, transportScore)
-        # tileID = insert_tile(tile)
-        tileID = 0
-        nodes = [*groceries, *restaurants, *bars, *parking_lots, *transport]
-        for n in nodes:
-            n.tileId = tileID
-        print(
-            f"GroceryScore: {groceriesScore}; restaurantScore: {restaurantScore}; barScore: {barScore}; transportScore: {transportScore}; parkingScore: {parkingScore}"
-        )
-        # if not nodes:
-        #     continue
-        # else:
-        #     insert_nodes(nodes)
+
+
+def fetch_data(lat: float, lon: float) -> None:
+    groceries = get_shops(overpassapi, lat, lon)
+    groceriesScore = get_score(groceries, GROCERIE_UPPER)
+    restaurants = get_restaurants(overpassapi, lat, lon)
+    restaurantScore = get_score(restaurants, RESTAURANT_UPPER)
+    bars = get_bars(overpassapi, lat, lon)
+    barScore = get_score(bars, BARS_UPPER)
+    parking_lots = get_parking_lots(overpassapi, lat, lon)
+    parkingScore = get_score(parking_lots, PARKING_UPPER)
+    transport = get_public_transportation(overpassapi, lat, lon)
+    transportScore = get_score(transport, TRANSPORT_UPPER)
+    tile = Tile(lat, lon, barScore, groceriesScore, parkingScore,
+                restaurantScore, transportScore)
+    tileID = insert_tile(tile)
+    nodes = [*groceries, *restaurants, *bars, *parking_lots, *transport]
+    for n in nodes:
+        n.tileId = tileID
+    print(
+        f"GroceryScore: {groceriesScore}; restaurantScore: {restaurantScore}; barScore: {barScore}; transportScore: {transportScore}; parkingScore: {parkingScore}"
+    )
+    if not nodes:
+        return
+    else:
+        insert_nodes(nodes)
+
+
+if __name__ == "__main__":
+    lat_lon_list = []
+
+    with open(
+            os.path.abspath(os.path.dirname(sys.argv[0])) + '/coordinates.txt',
+            'r') as coordinates:
+        for lat_lon in coordinates:
+            lat_lon = lat_lon.strip()
+            lat, lon = lat_lon.split(" ")
+            lat, lon = float(lat), float(lon)
+            lat_lon_list.append((lat, lon))
+
+    with Pool(processes=4) as p:
+        p.starmap(fetch_data, lat_lon_list)
