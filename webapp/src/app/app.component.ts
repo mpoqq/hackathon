@@ -7,10 +7,6 @@ import { latLng, tileLayer } from 'leaflet';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  checked = true;
-  title = 'board';
-
   constructor() {
-   
   }
 }

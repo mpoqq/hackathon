@@ -1,0 +1,24 @@
+<div class="container-fluid w-100 h-100 main">
+    <div class="container h-10 d-flex justify-content-center align-items-center">
+        <img src="../../assets/logo.svg" class="logo">
+    </div>
+    <div class="container h-10 d-flex justify-content-center align-items-center">
+        <form class="city-form" (ngSubmit)="search()">
+            <input [formControl]="cityFormControl" class="city-input shadow-none" placeholder="Enter your City">
+        </form>
+    </div>
+    <div class="container h-10 d-flex justify-content-center align-items-center button-container">
+        <button mat-flat-button color="accent" (click)="search()">Match me!</button>
+    </div>
+</div>
+<div class="container-fluid d-flex w-100 main footer">
+    <div class="col w-50">
+        <a>© 2020 - 2020 GoodHood</a>
+    </div>
+    <div class="col w-50 d-flex flex-row-reverse">
+        <a class="link" href="http://">Sitemap</a>
+        <a class="link" href="http://">Imprint</a>
+        <a class="link" href="http://">Privacy Policy</a>
+        <a class="link" href="http://">Cookie Settings</a>
+    </div>
+</div>

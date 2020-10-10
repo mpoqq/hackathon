@@ -1,0 +1,86 @@
+<div class="container-fluid w-100 h-100 main">
+    <div class="row w-100">
+        <div class="col display-flex justify-content-center">
+            <img src="../../assets/logo.svg" class="logo" routerLink="/" />
+        </div>
+
+    </div>
+    <div class="row w-100">
+        <div class="col-3 display-flex justify-content-center menu-bg">
+            <div class="container d-flex justify-content-center align-items-center">
+                <div class="col scoring">
+                    <div class="row">
+                        <mat-checkbox [(ngModel)]="appService.groceriesChecked">Groceries</mat-checkbox>
+                    </div>
+                    <div class="row">
+                        <mat-checkbox [(ngModel)]="appService.transportationChecked">Transportation</mat-checkbox>
+                    </div>
+                    <div class="row">
+                        <mat-checkbox [(ngModel)]="appService.barsChecked">Bars/Cafe</mat-checkbox>
+                    </div>
+                    <div class="row">
+                        <mat-checkbox [(ngModel)]="appService.parkingLotsChecked">Parking lots</mat-checkbox>
+                    </div>
+                    <div class="row">
+                        <mat-checkbox [(ngModel)]="appService.restaurantsChecked">Restaurants</mat-checkbox>
+                    </div>
+                    <div class="row">
+                        <mat-checkbox>Nature</mat-checkbox>
+                    </div>
+                    <div class="row">
+                        <mat-checkbox>Crime</mat-checkbox>
+                    </div>
+                    <div class="row">
+                        <mat-checkbox>Education</mat-checkbox>
+                    </div>
+                    <div class="row">
+                        <mat-checkbox>Pricing</mat-checkbox>
+                    </div>
+                    <div class="row">
+                        <mat-checkbox>Air Quality</mat-checkbox>
+                    </div>
+                </div>
+                <div class="col scoring">
+                    <div class="row">
+                        <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"
+                            [(ngModel)]="appService.groceriesValue"></mat-slider>
+                    </div>
+                    <div class="row">
+                        <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"
+                            [(ngModel)]="appService.transportationValue"></mat-slider>
+                    </div>
+                    <div class="row">
+                        <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"
+                            [(ngModel)]="appService.barsValue"></mat-slider>
+                    </div>
+                    <div class="row">
+                        <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"
+                            [(ngModel)]="appService.parkingLotsValue"></mat-slider>
+                    </div>
+                    <div class="row">
+                        <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"
+                            [(ngModel)]="appService.restaurantsValue"></mat-slider>
+                    </div>
+                    <div class="row">
+                        <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"></mat-slider>
+                    </div>
+                    <div class="row">
+                        <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"></mat-slider>
+                    </div>
+                    <div class="row">
+                        <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"></mat-slider>
+                    </div>
+                    <div class="row">
+                        <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"></mat-slider>
+                    </div>
+                    <div class="row">
+                        <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"></mat-slider>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col justify-content-center">
+            <app-map></app-map>
+        </div>
+    </div>
+</div>
