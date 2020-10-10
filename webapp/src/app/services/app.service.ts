@@ -15,4 +15,7 @@ export class AppService {
     barsChecked = true;
     parkingLotsChecked = true;
     restaurantsChecked = true;
+
+    city: string;
+    work: string;
 }

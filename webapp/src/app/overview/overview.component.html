@@ -6,7 +6,7 @@
         <div class="col">
             <div class="container d-flex justify-content-between">
                 <div class="col-md-auto d-flex pb-3 pt-3">
-                    <input class="city-input xl-font" [(ngModel)]="city" (keyup.enter)="updateCity()"
+                    <input class="city-input xl-font" [(ngModel)]="appService.city" (keyup.enter)="updateCity()"
                         (blur)="updateCity()" placeholder="Enter your City">
                 </div>
                 <div class="col-md-auto d-flex pb-3 pt-3">
@@ -90,7 +90,7 @@
                 </div>
             </div>
         </div>
-        <div class="col pt-5 justify-content-center">
+        <div class="col p-0 justify-content-center">
             <app-map></app-map>
         </div>
     </div>

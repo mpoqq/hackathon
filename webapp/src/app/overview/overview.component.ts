@@ -19,13 +19,13 @@ export class OverviewComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.activatedRoute.fragment.subscribe(fragment => this.city = fragment);
+    this.activatedRoute.fragment.subscribe(fragment => this.appService.city = fragment);
   }
 
   updateCity() {
-    this.router.navigate(['overview'], { fragment: this.city });
+    this.router.navigate(['overview'], { fragment: this.appService.city });
   }
-
+  
   updateWork() {
   }
 
