@@ -3,12 +3,15 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Input,
   OnInit,
   ReflectiveInjector,
   ViewChild,
 } from "@angular/core";
 import * as L from "leaflet";
+import { icon, marker } from 'leaflet';
 import "leaflet.heat/dist/leaflet-heat.js";
+import { AppService } from '../services/app.service';
 import { RestService, Details, OSM, Tile } from "./rest.service";
 
 interface IHeadLayer {
@@ -26,6 +29,24 @@ export class MapComponent implements OnInit {
   private readonly centerLat = 9.9876076;
   private heat: any;
   private curRect: any[];
+  private marker: any;
+
+  @Input() set work(value: string) {
+    if (value) {
+      this.restService.forwardGeocode(value).subscribe(point => {
+        this.marker = marker([point[0], point[1]], {
+          icon: icon({
+            iconSize: [25, 41],
+            iconAnchor: [13, 41],
+            iconUrl: 'assets/marker-icon.png',
+            shadowUrl: 'assets/marker-shadow.png'
+          })
+        });
+        this.layers.push(this.marker);
+      })
+
+    }
+  }
 
   @ViewChild("tooltip")
   tooltipRef: ElementRef<HTMLElement>;
@@ -48,16 +69,17 @@ export class MapComponent implements OnInit {
   constructor(
     private chRef: ChangeDetectorRef,
     private restService: RestService,
+    private appService: AppService,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+  }
 
   newAddressPoints = [];
   addressPoints = [];
   onMapReady(map) {
 
-
-    //const heat = L.heatLayer(newAddressPoints).addTo(map);
 
 
     this.restService.getAllTiles().subscribe();
@@ -141,19 +163,20 @@ export class MapComponent implements OnInit {
 
     this.tooltipRef.nativeElement.innerHTML = "<b>Ø 4km</b><br>";
 
-    this.tooltipRef.nativeElement.innerHTML = '<b>Ø 3km</b><br>'
+    this.tooltipRef.nativeElement.innerHTML = '<b>Ø 4km</b><br>'
 
-    if(addressPoint) {
-    this.tooltipRef.nativeElement.innerHTML += `BarScore: ${Math.trunc(addressPoint.barScore)}%<br>`
-    this.tooltipRef.nativeElement.innerHTML += `GroceriesScore: ${Math.trunc(addressPoint.groceriesScore)}%<br>`
-    this.tooltipRef.nativeElement.innerHTML += `RestaurantScore: ${Math.trunc(addressPoint.restaurantScore)}%<br>`
-    this.tooltipRef.nativeElement.innerHTML += `TransportationScore: ${Math.trunc(addressPoint.transportationScore)}%<br>`
-    this.tooltipRef.nativeElement.innerHTML += `ParkingLotScore: ${Math.trunc(addressPoint.parkingLotScore)}%<br>`
+    if (addressPoint) {
+      this.tooltipRef.nativeElement.innerHTML += `BarScore: ${Math.trunc(addressPoint.barScore)}%<br>`
+      this.tooltipRef.nativeElement.innerHTML += `GroceriesScore: ${Math.trunc(addressPoint.groceriesScore)}%<br>`
+      this.tooltipRef.nativeElement.innerHTML += `RestaurantScore: ${Math.trunc(addressPoint.restaurantScore)}%<br>`
+      this.tooltipRef.nativeElement.innerHTML += `TransportationScore: ${Math.trunc(addressPoint.transportationScore)}%<br>`
+      this.tooltipRef.nativeElement.innerHTML += `ParkingLotScore: ${Math.trunc(addressPoint.parkingLotScore)}%<br>`
     }
 
     this.curRect = rect;
 
     this.layers = [];
+   
     const polygon = L.polygon(this.curRect, {
       color: "white",
     });
@@ -186,7 +209,7 @@ export class MapComponent implements OnInit {
             }
             popupContentBars += res + ' ' + parseInt(bar.distance) + "m</br>";
             var text = document.createElement("div");
-            text.innerHTML = popupContentBars + popupContentGroceries + popupContentTransport + popupContentRestaurant + popupContentParkingLots;
+            text.innerHTML = popupContentBars + "</br>" + popupContentGroceries + "</br>" + popupContentTransport + "</br>" + popupContentRestaurant + "</br>" + popupContentParkingLots;
             popup.setPopupContent(text);
           });
         });
@@ -205,7 +228,7 @@ export class MapComponent implements OnInit {
             }
             popupContentGroceries += res + ' ' + parseInt(bar.distance) + "m</br>";
             var text = document.createElement("div");
-            text.innerHTML = popupContentBars + popupContentGroceries + popupContentTransport + popupContentRestaurant + popupContentParkingLots;
+            text.innerHTML = popupContentBars + "</br>" + popupContentGroceries + "</br>" + popupContentTransport + "</br>" + popupContentRestaurant + "</br>" + popupContentParkingLots;
             popup.setPopupContent(text);
           });
         });
@@ -224,7 +247,7 @@ export class MapComponent implements OnInit {
             }
             popupContentTransport += res + ' ' + parseInt(bar.distance) + "m</br>";
             var text = document.createElement("div");
-            text.innerHTML = popupContentBars + popupContentGroceries + popupContentTransport + popupContentRestaurant + popupContentParkingLots;
+            text.innerHTML = popupContentBars + "</br>" + popupContentGroceries + "</br>" + popupContentTransport + "</br>" + popupContentRestaurant + "</br>" + popupContentParkingLots;
             popup.setPopupContent(text);
           });
         });
@@ -243,7 +266,7 @@ export class MapComponent implements OnInit {
             }
             popupContentRestaurant += res + ' ' + parseInt(bar.distance) + "m</br>";
             var text = document.createElement("div");
-            text.innerHTML = popupContentBars + popupContentGroceries + popupContentTransport + popupContentRestaurant + popupContentParkingLots;
+            text.innerHTML = popupContentBars + "</br>" + popupContentGroceries + "</br>" + popupContentTransport + "</br>" + popupContentRestaurant + "</br>" + popupContentParkingLots;
             popup.setPopupContent(text);
           });
         });
@@ -262,7 +285,7 @@ export class MapComponent implements OnInit {
             }
             popupContentParkingLots += res + ' ' + parseInt(bar.distance) + "m</br>";
             var text = document.createElement("div");
-            text.innerHTML = popupContentBars + popupContentGroceries + popupContentTransport + popupContentRestaurant + popupContentParkingLots;
+            text.innerHTML = popupContentBars + "</br>" + popupContentGroceries + "</br>" + popupContentTransport + "</br>" + popupContentRestaurant + "</br>" + popupContentParkingLots;
             popup.setPopupContent(text);
           });
         });
@@ -279,6 +302,9 @@ export class MapComponent implements OnInit {
 
 
     this.layers.push(polygon);
+    if(this.marker) {
+      this.layers.push(this.marker);
+    }
 
     this.chRef.detectChanges();
 

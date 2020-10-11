@@ -6,6 +6,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import { AppService } from '../services/app.service';
 import { map, filter } from "rxjs/operators";
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-overview',
@@ -15,6 +16,7 @@ import { map, filter } from "rxjs/operators";
 export class OverviewComponent implements OnInit {
   city: string;
   work: string;
+  inputWork: string;
 
   appService: AppService;
 
@@ -33,6 +35,7 @@ export class OverviewComponent implements OnInit {
   }
   
   updateWork() {
+    this.inputWork = this.work;
   }
 
   formatLabel(value: number) {

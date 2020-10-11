@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,5 +18,5 @@ export class AppService {
     restaurantsChecked = true;
 
     city: string;
-    work: string;
+    work = new Observable<string>();
 }
