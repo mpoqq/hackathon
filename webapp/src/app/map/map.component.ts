@@ -30,6 +30,7 @@ export class MapComponent implements OnInit {
   private heat: any;
   private curRect: any[];
   private marker: any;
+  private detailMarker: any[] = [];
 
   @Input() set work(value: string) {
     if (value) {
@@ -193,6 +194,9 @@ export class MapComponent implements OnInit {
       var transportation: Details[];
       var restaurant: Details[];
       var parkingLots: Details[];
+      this.detailMarker = [];
+
+      
 
       this.restService.getDetails(parseInt(addressPoint.id)).subscribe((x: Details[]) => {
         bars = x.filter(d => d.type == "BAR");
@@ -205,8 +209,17 @@ export class MapComponent implements OnInit {
             for (const elem of x.elements) {
               if (elem.tags.name) {
                 res += elem.tags.name;
+                this.detailMarker.push(marker([elem.lat, elem.lon], {
+                  icon: icon({
+                    iconSize: [25, 41],
+                    iconAnchor: [13, 41],
+                    iconUrl: 'assets/bar.png',
+                    shadowUrl: 'assets/marker-shadow.png'
+                  })
+                }));
               }
             }
+
             popupContentBars += res + ' ' + parseInt(bar.distance) + "m</br>";
             var text = document.createElement("div");
             text.innerHTML = popupContentBars + "</br>" + popupContentGroceries + "</br>" + popupContentTransport + "</br>" + popupContentRestaurant + "</br>" + popupContentParkingLots;
@@ -224,6 +237,14 @@ export class MapComponent implements OnInit {
             for (const elem of x.elements) {
               if (elem.tags.name) {
                 res += elem.tags.name;
+                this.detailMarker.push(marker([elem.lat, elem.lon], {
+                  icon: icon({
+                    iconSize: [25, 41],
+                    iconAnchor: [13, 41],
+                    iconUrl: 'assets/grocery.png',
+                    shadowUrl: 'assets/marker-shadow.png'
+                  })
+                }));
               }
             }
             popupContentGroceries += res + ' ' + parseInt(bar.distance) + "m</br>";
@@ -243,6 +264,14 @@ export class MapComponent implements OnInit {
             for (const elem of x.elements) {
               if (elem.tags.name) {
                 res += elem.tags.name;
+                this.detailMarker.push(marker([elem.lat, elem.lon], {
+                  icon: icon({
+                    iconSize: [25, 41],
+                    iconAnchor: [13, 41],
+                    iconUrl: 'assets/busstop.png',
+                    shadowUrl: 'assets/marker-shadow.png'
+                  })
+                }));
               }
             }
             popupContentTransport += res + ' ' + parseInt(bar.distance) + "m</br>";
@@ -262,6 +291,14 @@ export class MapComponent implements OnInit {
             for (const elem of x.elements) {
               if (elem.tags.name) {
                 res += elem.tags.name;
+                this.detailMarker.push(marker([elem.lat, elem.lon], {
+                  icon: icon({
+                    iconSize: [25, 41],
+                    iconAnchor: [13, 41],
+                    iconUrl: 'assets/restaurant.png',
+                    shadowUrl: 'assets/marker-shadow.png'
+                  })
+                }));
               }
             }
             popupContentRestaurant += res + ' ' + parseInt(bar.distance) + "m</br>";
@@ -281,6 +318,14 @@ export class MapComponent implements OnInit {
             for (const elem of x.elements) {
               if (elem.tags.name) {
                 res += elem.tags.name;
+                this.detailMarker.push(marker([elem.lat, elem.lon], {
+                  icon: icon({
+                    iconSize: [25, 41],
+                    iconAnchor: [13, 41],
+                    iconUrl: 'assets/parking.png',
+                    shadowUrl: 'assets/marker-shadow.png'
+                  })
+                }));
               }
             }
             popupContentParkingLots += res + ' ' + parseInt(bar.distance) + "m</br>";
@@ -305,7 +350,9 @@ export class MapComponent implements OnInit {
     if(this.marker) {
       this.layers.push(this.marker);
     }
-
+    if(this.detailMarker) {
+      this.detailMarker.forEach(m => this.layers.push(m));
+    }
     this.chRef.detectChanges();
 
     //this.heat.addLatLng(e.latlng);
