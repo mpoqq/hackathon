@@ -43,23 +43,23 @@
                 <div class="col scoring">
                     <div class="row">
                         <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"
-                            [(ngModel)]="appService.groceriesValue"></mat-slider>
+                            [(ngModel)]="appService.groceriesValue" (change)="change()"></mat-slider>
                     </div>
                     <div class="row">
                         <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"
-                            [(ngModel)]="appService.transportationValue"></mat-slider>
+                            [(ngModel)]="appService.transportationValue" (change)="change()"></mat-slider>
                     </div>
                     <div class="row">
                         <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"
-                            [(ngModel)]="appService.barsValue"></mat-slider>
+                            [(ngModel)]="appService.barsValue" (change)="change()"></mat-slider>
                     </div>
                     <div class="row">
                         <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"
-                            [(ngModel)]="appService.parkingLotsValue"></mat-slider>
+                            [(ngModel)]="appService.parkingLotsValue" (change)="change()"></mat-slider>
                     </div>
                     <div class="row">
                         <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"
-                            [(ngModel)]="appService.restaurantsValue"></mat-slider>
+                            [(ngModel)]="appService.restaurantsValue" (change)="change()"></mat-slider>
                     </div>
                     <div class="row">
                         <mat-slider min="0" max="10" step="1" thumbLabel [displayWith]="formatLabel"></mat-slider>
@@ -79,7 +79,7 @@
                 </div>
             </div>
         </div>
-        <div class="col justify-content-center">
+        <div class="col justify-content-center h-100">
             <app-map></app-map>
         </div>
     </div>

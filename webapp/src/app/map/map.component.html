@@ -1,5 +1,8 @@
-<div style="height: 600px;" leaflet [leafletOptions]="options"
+<div style="height: 85vh;" leaflet [leafletOptions]="options"
 [leafletLayers]="layers" id="mapid"
 (leafletMapReady)="onMapReady($event)">
 <div class="tooltip" #tooltip></div>
 </div>
+<img src="assets/avatar.png" class="avatar">
+<div class="speechbubble" *ngIf="!!address">Neugierig? Finde <a target="_blank" [href]="'https://www.kalaydo.de/immobilien/mietwohnungen/o/3/4/?geoName=' + address">hier</a> Wohnungen in <b>{{address}}</b></div>
+<div class="speechbubble" *ngIf="!address">Wähle links deine <b>Präferenzen</b> für die <b>perfekte Nachbarschaft!</b></div>

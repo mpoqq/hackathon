@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { Geocode } from './geocode';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 export declare module OSM {
 
@@ -70,6 +70,9 @@ constructor(id: string, tilesId: string, type: string, distance: string, nodeId:
 })
 export class RestService {
 
+  public tiles = new BehaviorSubject<Tile[]>([])
+  public initialTiles = [];
+
   constructor(private client: HttpClient) { }
 
   getDetails(coords: [number, number]): Observable<Details[]> {
@@ -85,7 +88,7 @@ export class RestService {
   }
 
   getAllTiles(): Observable<Tile[]> {
-    const inKm = 1/112 / 10;
+  /*  const inKm = 1/112 / 10;
   const centerLong = 48.4060822;
   const centerLat = 9.9876076;
     const tiles = [];
@@ -103,10 +106,22 @@ export class RestService {
         });
       }
     }  
+    this.initialTiles = JSON.parse(JSON.stringify(tiles));
       
+    this.tiles.next(tiles);
+
+    return of(tiles);*/
+
+    
+     return this.client.get<Tile[]>('https://e97cdbfd571e.ngrok.io/api/tiles').pipe(tap((tiles: Tile[])=> {
+        this.initialTiles = tiles;
+        this.tiles.next(JSON.parse(JSON.stringify(tiles)));
+        })
+      );
+    
 
 
-    return of(tiles);
+    return this.tiles;
   }
 
   reverseGeocode(coord: [number, number]): Observable<string> {
@@ -124,6 +139,9 @@ export class RestService {
             firstPart = comp.neighbourhood;
           }
           if (!firstPart) {
+            return "";
+          }
+          if (!comp.city) {
             return "";
           }
           return `${firstPart}, ${comp.postcode} ${comp.city}`;

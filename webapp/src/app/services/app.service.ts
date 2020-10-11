@@ -4,11 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AppService {
-    groceriesValue = 5;
-    transportationValue = 5;
-    barsValue = 5;
-    parkingLotsValue = 5;
-    restaurantsValue = 5;
+    groceriesValue = 1;
+    transportationValue = 1;
+    barsValue = 1;
+    parkingLotsValue = 1;
+    restaurantsValue = 1;
 
     groceriesChecked = true;
     transportationChecked = true;
