@@ -155,7 +155,7 @@ export class MapComponent implements OnInit {
     })
     
 
-    this.layers.push(      polygon);
+    this.layers.push(polygon);
     
     this.chRef.detectChanges();
       
