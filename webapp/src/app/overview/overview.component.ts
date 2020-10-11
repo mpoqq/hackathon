@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+
 import { RestService } from '../map/rest.service';
+
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+
 import { AppService } from '../services/app.service';
+import { map, filter } from "rxjs/operators";
 
 @Component({
   selector: 'app-overview',
@@ -8,16 +13,26 @@ import { AppService } from '../services/app.service';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
-  checked = true;
-  title = 'board';
+  city: string;
+  work: string;
 
   appService: AppService;
 
-  constructor(appService: AppService, private restService: RestService) { 
+
+  constructor(appService: AppService, private activatedRoute: ActivatedRoute, private router: Router, private restService: RestService) { 
+
     this.appService = appService
    }
 
   ngOnInit(): void {
+    this.activatedRoute.fragment.subscribe(fragment => this.appService.city = fragment);
+  }
+
+  updateCity() {
+    this.router.navigate(['overview'], { fragment: this.appService.city });
+  }
+  
+  updateWork() {
   }
 
   formatLabel(value: number) {

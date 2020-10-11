@@ -7,8 +7,17 @@
 .container {
     display: flex;
 }
+
+.bg {
+    background: #b2b0c0;
+}
+
 .menu-bg {
-    background: lightgrey;
+    background: #9390a6;
+}
+
+.xl-font {
+    font-size: large;
 }
 
 .logo {
@@ -24,3 +33,12 @@
     }
 }
 
+.city-input {
+    width: 360px;
+    background: #fff;
+    color: #534f6d;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+    border: 0;
+    outline: 0;
+    padding: 10px 18px;
+}

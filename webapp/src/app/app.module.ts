@@ -15,7 +15,9 @@ import { OverviewComponent } from './overview/overview.component';
 import { MatInputModule } from '@angular/material/input';
 import { LandingComponent } from './landing/landing.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon'; 
 import { AppService } from './services/app.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -29,12 +31,14 @@ import { AppService } from './services/app.service';
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
+    MatFormFieldModule,
     MatSliderModule,
     MatGridListModule,
     MatCheckboxModule,
     MapModule,
     MatTooltipModule,
     HttpClientModule,
+    MatIconModule,
     FormsModule,
     ReactiveFormsModule,
   ],
