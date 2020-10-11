@@ -130,7 +130,7 @@ export class MapComponent implements OnInit {
     });
 
 
-    this.tooltipRef.nativeElement.innerHTML = '';
+    this.tooltipRef.nativeElement.innerHTML = "<b>Ø 4km</b><br>";
 
     this.tooltipRef.nativeElement.innerHTML = '<b>Ø 3km</b><br>'
 
