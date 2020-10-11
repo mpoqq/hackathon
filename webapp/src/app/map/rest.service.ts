@@ -169,4 +169,20 @@ export class RestService {
         })
       );
   }
+
+  forwardGeocode(placename: string): Observable<[number, number]> {
+    return this.client
+      .get<Geocode>(
+        `https://api.opencagedata.com/geocode/v1/json?key=255440e4c59440e09a2c30126391b76a&q=${placename}&pretty=1`
+      )
+      .pipe(
+        map((g: Geocode) => {
+          if (g.results.length === 0) {
+            return [0, 0];
+          }
+          const comp = g.results[0].geometry;
+          return [comp.lat, comp.lng];
+        })
+      );
+  }
 }
