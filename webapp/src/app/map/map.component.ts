@@ -123,9 +123,18 @@ export class MapComponent implements OnInit {
     }
 
     var addressPoint: Tile;
-    this.addressPoints.forEach(a => {
-      if (lat.toString().substring(0, 5).startsWith(a[0].toString().substring(0, 5)) && lng.toString().substring(0, 5).startsWith(a[1].toString().substring(0, 5))) {
-        addressPoint = a[2];
+    this.restService.initialTiles.forEach((a) => {
+      if (
+        lat
+          .toString()
+          .substring(0, 5)
+          .startsWith(a.latitude.toString().substring(0, 5)) &&
+        lng
+          .toString()
+          .substring(0, 5)
+          .startsWith(a.longitude.toString().substring(0, 5))
+      ) {
+        addressPoint = a;
       }
     });
 
