@@ -77,7 +77,8 @@ export class RestService {
 
   constructor(private client: HttpClient) {}
 
-  getDetails(coords: [number, number]): Observable<Details[]> {
+  getDetails(id: number): Observable<Details[]> {
+    return this.client.get<Details[]>('https://02bb1a4d2689.ngrok.io/api/types?tilesId=' + id).pipe();
     return of([
       new Details(
         "ID",
@@ -103,19 +104,39 @@ export class RestService {
     ]);
   }
 
-  getSpecificInfos(): Observable<OSM.RootObject> {
-    return this.client.get<OSM.RootObject>(
-      "https://api.openstreetmap.org/api/0.6/node/1015047079.json"
-    );
+  getSpecificInfos(nodeId: string): Observable<OSM.RootObject> {
+    return this.client.get<OSM.RootObject>('https://api.openstreetmap.org/api/0.6/node/' + nodeId + '.json');
   }
 
   getAllTiles(): Observable<Tile[]> {
-    return this.client
-      .get<Tile[]>("https://e97cdbfd571e.ngrok.io/api/tiles")
-      .pipe(
-        tap((tiles: Tile[]) => {
-          this.initialTiles = tiles;
-          this.tiles.next(JSON.parse(JSON.stringify(tiles)));
+  /*  const inKm = 1/112 / 10;
+  const centerLong = 48.4060822;
+  const centerLat = 9.9876076;
+    const tiles = [];
+    for (let i = 0; i < 30; i++) {
+      for (let j = -20; j < 0; j++) {
+        tiles.push({
+          id: "ID",
+          latitude: centerLong + inKm * j,
+          longitude: centerLat + inKm * i,
+          groceriesScore: Math.random(),
+          transportationScore: Math.random(),
+          parkingLotScore: Math.random(),
+          barScore: Math.random(),
+          restaurantScore: Math.random()
+        });
+      }
+    }  
+    this.initialTiles = JSON.parse(JSON.stringify(tiles));
+      
+    this.tiles.next(tiles);
+
+    return of(tiles);*/
+
+    
+     return this.client.get<Tile[]>('https://02bb1a4d2689.ngrok.io/api/tiles').pipe(tap((tiles: Tile[])=> {
+        this.initialTiles = tiles;
+        this.tiles.next(JSON.parse(JSON.stringify(tiles)));
         })
       );
   }
