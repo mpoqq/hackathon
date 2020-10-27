@@ -15,7 +15,7 @@ jobs:
         name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=mpoqq/hackathon/backend
+          DOCKER_IMAGE=mpoqq/hackathon-backend
           VERSION=edge
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
