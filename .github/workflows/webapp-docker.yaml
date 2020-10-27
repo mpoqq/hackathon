@@ -15,7 +15,7 @@ jobs:
         name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=mpoqq/hackathon
+          DOCKER_IMAGE=mpoqq/hackathon/webapp
           VERSION=edge
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
@@ -25,7 +25,7 @@ jobs:
             VERSION=pr-${{ github.event.number }}
           fi
           TAGS="${DOCKER_IMAGE}:${VERSION}"
-          AGS="$TAGS,${DOCKER_IMAGE}:latest"
+          TAGS="$TAGS,${DOCKER_IMAGE}:latest"
           if [ "${{ github.event_name }}" = "push" ]; then
             TAGS="$TAGS,${DOCKER_IMAGE}:sha-${GITHUB_SHA::8}"
           fi
