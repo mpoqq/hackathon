@@ -147,5 +147,5 @@ jobs:
         kubectl config current-context
         (cd kubernetes/webapp/overlays/prod && kustomize edit set image mpoqq/hackathon-webapp=mpoqq/hackathon-webapp:$VERSION)
         (cd kubernetes/backend/overlays/prod && kustomize edit set image mpoqq/hackathon-backend=mpoqq/hackathon-backend:$VERSION)
-        kustomize build kubernetes/webapp/overlays/prod | kubectl apply -f
-        kustomize build kubernetes/backend/overlays/prod | kubectl apply -f
+        kustomize build kubernetes/webapp/overlays/prod | kubectl apply -f -
+        kustomize build kubernetes/backend/overlays/prod | kubectl apply -f -
