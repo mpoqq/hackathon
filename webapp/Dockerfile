@@ -11,4 +11,4 @@ RUN npm run build -- --outputPath=./dist/
 
 FROM bitnami/nginx
 
-COPY --from=build /app/dist/ /usr/share/nginx/html
+COPY --from=build /app/dist/ /app
