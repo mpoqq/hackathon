@@ -1,10 +1,8 @@
 name: Deploy to Cloud
 on:
-  jobs:
-    my_first_job:
-      name: Publish Webapp Docker image
-    my_second_job:
-      name: Publish Backend Docker image
+  push:
+    branches:
+      - master
 jobs:
   create_backend_docker_image:
     steps:
