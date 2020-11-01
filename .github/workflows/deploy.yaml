@@ -5,7 +5,7 @@ on:
       - master
 jobs:
   create_backend_docker_image:
-    name: Push Docker image to GitHub Packages
+    name: Push Backend Docker image to GitHub Packages
     runs-on: ubuntu-latest
     steps:
       -
@@ -58,7 +58,7 @@ jobs:
             org.opencontainers.image.created=${{ steps.prep.outputs.created }}
             org.opencontainers.image.revision=${{ github.sha }}
   create_webapp_docker_image:
-    name: Push Docker image to Docker Hub
+    name: Push Webapp Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
       -
@@ -140,7 +140,7 @@ jobs:
         curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
     - name: Authenticate with IBM Cloud CLI
       run: |
-        ibmcloud login --apikey "${{ secrets.IBM_CLOUD_API_KEY }}" -r "eu-de" -g default
+        ibmcloud login --apikey "${{ secrets.IBM_CLOUD_API_KEY }}" -r "eu-de" -g Default
     - name: Deploy to IKS
       run: |
         ibmcloud ks cluster config --cluster ${{ secrets.IBM_CLUSTER_NAME }}
