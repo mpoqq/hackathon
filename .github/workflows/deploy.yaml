@@ -135,15 +135,12 @@ jobs:
         ibmcloud --version
         ibmcloud config --check-version=false
         ibmcloud plugin install -f kubernetes-service
-        ibmcloud plugin install -f container-registry
     - name: Install Kustomize
       run: |
         curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
     - name: Authenticate with IBM Cloud CLI
       run: |
         ibmcloud login --apikey "${{ secrets.IBM_CLOUD_API_KEY }}" -r "eu-de" -g default
-        ibmcloud cr region-set "eu-de"
-        ibmcloud cr login
     - name: Deploy to IKS
       run: |
         ibmcloud ks cluster config --cluster ${{ secrets.IBM_CLUSTER_NAME }}
