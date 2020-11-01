@@ -7,7 +7,7 @@ RUN npm install
 
 COPY . /app
 
-RUN npm run build -- --outputPath=./dist/
+RUN npm run build -- --outputPath=./dist/ --base-href=/webapp/
 
 FROM bitnami/nginx
 
