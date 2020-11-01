@@ -5,7 +5,6 @@ on:
       - master
 jobs:
   create_backend_docker_image:
-    steps:
     name: Push Docker image to GitHub Packages
     runs-on: ubuntu-latest
     steps:
